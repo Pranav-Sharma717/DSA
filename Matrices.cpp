@@ -138,40 +138,133 @@ using namespace std;
 // M[i,j]= non-zero if i>j
 //  Indexing of M[i,j] = [i(i-1)/2]+(j-1)
 
-struct Matrices
+// struct Matrices
+// {
+//     int *A;
+//     int n;
+// };
+
+// void Set(struct Matrices *m, int i, int j, int x)
+// {
+//     if (i >= j)
+//     {
+//         m->A[i * (i - 1) / 2 + j - 1] = x;
+//     }
+// }
+
+// int Get(struct Matrices m, int i, int j)
+// {
+//     if (i >= j)
+//     {
+//         return m.A[i * (i - 1) / 2 + j - 1];
+//     }
+//     else
+//         return 0;
+// }
+
+// void Display(struct Matrices m)
+// {
+//     int i, j;
+//     for (i = 1; i <= m.n; i++)
+//     {
+//         for (j = 1; j <= m.n; j++)
+//         {
+//             if (i >= j)
+//             {
+//                 cout << m.A[i * (i - 1) / 2 + j - 1] << " ";
+//             }
+//             else
+//                 cout << "0 ";
+//         }
+//         cout << endl;
+//     }
+// }
+
+// int main()
+// {
+//     struct Matrices m;
+//     cout << "Enter the dimensions" << endl;
+//     cin >> m.n;
+//     m.A = new int[m.n * (m.n + 1) / 2];
+//     int x;
+//     cout << "Enter all elements";
+//     for (int i = 1; i <= m.n; i++)
+//     {
+//         for (int j = 1; j <= m.n; j++)
+//         {
+//             cin >> x;
+//             Set(&m, i, j, x);
+//         }
+//     }
+//     cout << endl;
+//     Display(m);
+
+//     delete[] m.A;
+//     return 0;
+// }
+
+// The lower triangle matrix can again be represented by classes and usses OOP
+// Same as the diaagonal matrix, lower triangle will have almost the same functions
+// The formula for column major is A[n*(j-1)*(j-2)/2+i-j]
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+// Upper triangular matrix: if [i<=j] for all the non-zero elements
+
+class upperTriangular
 {
-    int *A;
+private:
     int n;
+    int *A;
+
+public:
+    upperTriangular()
+    {
+        n = 2;
+        A = new int[n * (n + 1) / 2];
+    }
+    upperTriangular(int n)
+    {
+        this->n = n;
+        A = new int[n * (n + 1) / 2];
+    }
+    ~upperTriangular()
+    {
+        delete[] A;
+    } // Destructor
+    void Set(int i, int j, int x);
+    int Get(int i, int j);
+    void Display();
 };
 
-void Set(struct Matrices *m, int i, int j, int x)
+// Row major mapping: index = n*(i-1) - (i-2)*(i-1)/2 + (j-i)
+void upperTriangular::Set(int i, int j, int x)
 {
-    if (i >= j)
+    if (i <= j)
     {
-        m->A[i * (i - 1) / 2 + j - 1] = x;
+        int index = n * (i - 1) - ((i - 2) * (i - 1)) / 2 + (j - i);
+        A[index] = x;
     }
 }
-
-int Get(struct Matrices m, int i, int j)
+int upperTriangular::Get(int i, int j)
 {
-    if (i >= j)
+    if (i <= j)
     {
-        return m.A[i * (i - 1) / 2 + j - 1];
+        int index = n * (i - 1) - ((i - 2) * (i - 1)) / 2 + (j - i);
+        return A[index];
     }
-    else
-        return 0;
+    return 0;
 }
-
-void Display(struct Matrices m)
+void upperTriangular::Display()
 {
-    int i, j;
-    for (i = 1; i <= m.n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        for (j = 1; j <= m.n; j++)
+        for (int j = 1; j <= n; j++)
         {
-            if (i >= j)
+            if (i <= j)
             {
-                cout << m.A[i * (i - 1) / 2 + j - 1] << " ";
+                int index = n * (i - 1) - ((i - 2) * (i - 1)) / 2 + (j - i);
+                cout << A[index] << " ";
             }
             else
                 cout << "0 ";
@@ -182,24 +275,29 @@ void Display(struct Matrices m)
 
 int main()
 {
-    struct Matrices m;
-    cout << "Enter the dimensions" << endl;
-    cin >> m.n;
-    m.A = new int[m.n * (m.n + 1) / 2];
-    int x;
-    cout << "Enter all elements";
-    for (int i = 1; i <= m.n; i++)
-    {
-        for (int j = 1; j <= m.n; j++)
-        {
-            cin >> x;
-            Set(&m, i, j, x);
-        }
-    }
-    cout << endl;
-    Display(m);
+    upperTriangular d(5);
 
-    delete[] m.A;
+    // Example: Set upper triangular elements (i <= j)
+    d.Set(1, 1, 1);
+    d.Set(1, 2, 2);
+    d.Set(1, 3, 3);
+    d.Set(1, 4, 4);
+    d.Set(1, 5, 5);
+    d.Set(2, 2, 6);
+    d.Set(2, 3, 7);
+    d.Set(2, 4, 8);
+    d.Set(2, 5, 9);
+    d.Set(3, 3, 1);
+    d.Set(3, 4, 1);
+    d.Set(3, 5, 1);
+    d.Set(4, 4, 1);
+    d.Set(4, 5, 1);
+    d.Set(5, 5, 1);
+
+    d.Display();
     return 0;
 }
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+// Symmetric matrix
+//  A matrix is said to be symmetric when M[i,j] = M[j,i];
