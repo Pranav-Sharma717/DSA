@@ -310,3 +310,4 @@ using namespace std;
 // lower diagonal: if(i-j)==1 index=i-2
 // Main diagonal: if(i-j)==0 index = n-1 + i-i
 // Upper Diagonal : if i-j ==-1 index = 2n-1+i-1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
