@@ -211,93 +211,102 @@ using namespace std;
 
 // Upper triangular matrix: if [i<=j] for all the non-zero elements
 
-class upperTriangular
-{
-private:
-    int n;
-    int *A;
+// class upperTriangular
+// {
+// private:
+//     int n;
+//     int *A;
 
-public:
-    upperTriangular()
-    {
-        n = 2;
-        A = new int[n * (n + 1) / 2];
-    }
-    upperTriangular(int n)
-    {
-        this->n = n;
-        A = new int[n * (n + 1) / 2];
-    }
-    ~upperTriangular()
-    {
-        delete[] A;
-    } // Destructor
-    void Set(int i, int j, int x);
-    int Get(int i, int j);
-    void Display();
-};
+// public:
+//     upperTriangular()
+//     {
+//         n = 2;
+//         A = new int[n * (n + 1) / 2];
+//     }
+//     upperTriangular(int n)
+//     {
+//         this->n = n;
+//         A = new int[n * (n + 1) / 2];
+//     }
+//     ~upperTriangular()
+//     {
+//         delete[] A;
+//     } // Destructor
+//     void Set(int i, int j, int x);
+//     int Get(int i, int j);
+//     void Display();
+// };
 
-// Row major mapping: index = n*(i-1) - (i-2)*(i-1)/2 + (j-i)
-void upperTriangular::Set(int i, int j, int x)
-{
-    if (i <= j)
-    {
-        int index = n * (i - 1) - ((i - 2) * (i - 1)) / 2 + (j - i);
-        A[index] = x;
-    }
-}
-int upperTriangular::Get(int i, int j)
-{
-    if (i <= j)
-    {
-        int index = n * (i - 1) - ((i - 2) * (i - 1)) / 2 + (j - i);
-        return A[index];
-    }
-    return 0;
-}
-void upperTriangular::Display()
-{
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= n; j++)
-        {
-            if (i <= j)
-            {
-                int index = n * (i - 1) - ((i - 2) * (i - 1)) / 2 + (j - i);
-                cout << A[index] << " ";
-            }
-            else
-                cout << "0 ";
-        }
-        cout << endl;
-    }
-}
+// // Row major mapping: index = n*(i-1) - (i-2)*(i-1)/2 + (j-i)
+// void upperTriangular::Set(int i, int j, int x)
+// {
+//     if (i <= j)
+//     {
+//         int index = n * (i - 1) - ((i - 2) * (i - 1)) / 2 + (j - i);
+//         A[index] = x;
+//     }
+// }
+// int upperTriangular::Get(int i, int j)
+// {
+//     if (i <= j)
+//     {
+//         int index = n * (i - 1) - ((i - 2) * (i - 1)) / 2 + (j - i);
+//         return A[index];
+//     }
+//     return 0;
+// }
+// void upperTriangular::Display()
+// {
+//     for (int i = 1; i <= n; i++)
+//     {
+//         for (int j = 1; j <= n; j++)
+//         {
+//             if (i <= j)
+//             {
+//                 int index = n * (i - 1) - ((i - 2) * (i - 1)) / 2 + (j - i);
+//                 cout << A[index] << " ";
+//             }
+//             else
+//                 cout << "0 ";
+//         }
+//         cout << endl;
+//     }
+// }
 
-int main()
-{
-    upperTriangular d(5);
+// int main()
+// {
+//     upperTriangular d(5);
 
-    // Example: Set upper triangular elements (i <= j)
-    d.Set(1, 1, 1);
-    d.Set(1, 2, 2);
-    d.Set(1, 3, 3);
-    d.Set(1, 4, 4);
-    d.Set(1, 5, 5);
-    d.Set(2, 2, 6);
-    d.Set(2, 3, 7);
-    d.Set(2, 4, 8);
-    d.Set(2, 5, 9);
-    d.Set(3, 3, 1);
-    d.Set(3, 4, 1);
-    d.Set(3, 5, 1);
-    d.Set(4, 4, 1);
-    d.Set(4, 5, 1);
-    d.Set(5, 5, 1);
+//     // Example: Set upper triangular elements (i <= j)
+//     d.Set(1, 1, 1);
+//     d.Set(1, 2, 2);
+//     d.Set(1, 3, 3);
+//     d.Set(1, 4, 4);
+//     d.Set(1, 5, 5);
+//     d.Set(2, 2, 6);
+//     d.Set(2, 3, 7);
+//     d.Set(2, 4, 8);
+//     d.Set(2, 5, 9);
+//     d.Set(3, 3, 1);
+//     d.Set(3, 4, 1);
+//     d.Set(3, 5, 1);
+//     d.Set(4, 4, 1);
+//     d.Set(4, 5, 1);
+//     d.Set(5, 5, 1);
 
-    d.Display();
-    return 0;
-}
+//     d.Display();
+//     return 0;
+// }
 /////////////////////////////////////////////////////////////
 
 // Symmetric matrix
 //  A matrix is said to be symmetric when M[i,j] = M[j,i];
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Tridiagonal triband matrix
+// M[i,j] is non zero when |i-j|<=1
+// To store the elements we will use diagonal by diagonal insertion.
+// To map upper lower and main diagonal, we have to use:
+// lower diagonal: if(i-j)==1 index=i-2
+// Main diagonal: if(i-j)==0 index = n-1 + i-i
+// Upper Diagonal : if i-j ==-1 index = 2n-1+i-1
