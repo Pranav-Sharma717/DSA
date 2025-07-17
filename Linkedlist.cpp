@@ -98,7 +98,7 @@ struct Node
 void create(int A[], int n)
 {
     int i;
-    struct Node *t, *last;
+    struct Node *p, *last;
     if (n <= 0)
         return;
     first = new Node;
@@ -107,22 +107,24 @@ void create(int A[], int n)
     last = first;
     for (i = 1; i < n; i++)
     {
-        t = new Node;
-        t->data = A[i];
-        t->next = NULL;
-        last->next = t;
-        last = t;
+        p = new Node;
+        p->data = A[i];
+        p->next = NULL;
+        last->next = p;
+        last = p;
     }
 }
+
+// Recursive Display of a linked list
 void Display(struct Node *p)
 {
-    while (p != NULL)
+    if (p != NULL)
     {
         printf("%d ", p->data);
-        p = p->next;
+        Display(p->next);
     }
-    printf("\n");
 }
+
 int main()
 {
     int A[] = {3, 5, 7, 10, 15};
@@ -130,4 +132,3 @@ int main()
     Display(first);
     return 0;
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////
