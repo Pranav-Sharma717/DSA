@@ -125,10 +125,45 @@ void Display(struct Node *p)
     }
 }
 
+void reverseDisplay(struct Node *p)
+{
+    if (p != NULL)
+    {
+        reverseDisplay(p->next);
+        printf("%d ", p->data);
+    }
+}
+
+int count(struct Node *p)
+{
+    int c = 0;
+    while (p != 0)
+    {
+        c++;
+        p = p->next;
+    }
+    return c;
+};
+int add(struct Node *p)
+{
+    int sum = 0;
+    while (p != 0)
+    {
+        sum += p->data;
+        p = p->next;
+    }
+    return sum;
+}
 int main()
 {
     int A[] = {3, 5, 7, 10, 15};
     create(A, 5);
     Display(first);
+    cout << endl;
+    reverseDisplay(first);
+    cout << endl;
+    cout << count(first);
+    cout << endl;
+    cout << add(first);
     return 0;
 }
