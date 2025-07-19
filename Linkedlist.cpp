@@ -154,6 +154,43 @@ int add(struct Node *p)
     }
     return sum;
 }
+int maximum(struct Node *p)
+{
+    int max = INT16_MIN;
+    while (p)
+    {
+        if (p->data > max)
+        {
+            max = p->data;
+        }
+        p = p->next;
+    }
+    return max;
+}
+// Optimized search
+int search(struct Node *p, int key)
+{
+    Node *q = NULL;
+    int index = 0;
+    while (p != NULL)
+    {
+        if (key == p->data)
+        {
+            if (q != NULL) // Only update q->next if q is not NULL
+            {
+                q->next = p->next;
+                p->next = first;
+                first = p;
+            }
+            // If q is NULL, p is already at the front
+            return index;
+        }
+        q = p;
+        p = p->next;
+        index++;
+    }
+    return -1; // Not found
+}
 int main()
 {
     int A[] = {3, 5, 7, 10, 15};
@@ -165,5 +202,9 @@ int main()
     cout << count(first);
     cout << endl;
     cout << add(first);
+    cout << endl;
+    cout << maximum(first);
+    cout << endl;
+    cout << search(first, 10);
     return 0;
 }
