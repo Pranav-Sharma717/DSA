@@ -93,12 +93,12 @@ struct Node
 {
     int data;
     Node *next;
-} *first = NULL;
+} *first = NULL, *last = NULL;
 
 void create(int A[], int n)
 {
     int i;
-    struct Node *p, *last;
+    struct Node *p;
     if (n <= 0)
         return;
     first = new Node;
@@ -191,6 +191,56 @@ int search(struct Node *p, int key)
     }
     return -1; // Not found
 }
+
+// Insertion in a linked list
+// We can create a linked list using insert function
+//(use insert in a loop from 0 to n) n will be taken as input or assigned as the number of nodes in that linked list.
+// We can use insert on last node to actually imitates append in a linked list(Adding a node at last).
+void Insert(int pos, int x)
+{
+    Node *t, *p;
+    // Insertion before the first node
+    if (pos == 0)
+    {
+        t = new Node;
+        t->data = x;
+        t->next = first;
+        first = t;
+    }
+    // Insertion at a desired position
+    else if (pos > 0)
+    {
+        p = first;
+        for (int i = 0; i < pos - 1 && p; i++)
+        {
+            p = p->next;
+        }
+        if (p)
+        {
+            t = new Node;
+            t->data = x;
+            t->next = p->next;
+            p->next = t;
+        }
+    }
+}
+
+void InsertLast(int x)
+{
+    Node *t = new Node;
+    t->data = x;
+    t->next = NULL;
+    if (first == NULL)
+    {
+        first = last = t;
+    }
+    else
+    {
+        last->next = t;
+        last = t;
+    }
+}
+
 int main()
 {
     int A[] = {3, 5, 7, 10, 15};
@@ -206,5 +256,10 @@ int main()
     cout << maximum(first);
     cout << endl;
     cout << search(first, 10);
+    cout << endl;
+    Insert(2, 17);
+    Display(first);
+    InsertLast(18);
+    Display(last);
     return 0;
 }
