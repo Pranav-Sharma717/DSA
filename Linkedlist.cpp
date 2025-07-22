@@ -240,6 +240,38 @@ void InsertLast(int x)
         last = t;
     }
 }
+//////////////////////////////////
+// Deletion in a linked list
+int Delete(int pos)
+{
+    Node *p, *q;
+    int x = -1, i;
+    if (pos == 1)
+    {
+        x = first->data;
+        p = first;
+        first = first->next;
+        delete p;
+        return x;
+    }
+    else
+    {
+        p = first;
+        q = NULL;
+        for (i = 0; i < pos - 1 && p; i++)
+        {
+            q = p;
+            p = p->next;
+        }
+        if (p)
+        {
+            q->next = p->next;
+            x = p->data;
+            delete p;
+        }
+        return x;
+    }
+}
 
 int main()
 {
@@ -261,5 +293,8 @@ int main()
     Display(first);
     InsertLast(18);
     Display(last);
+    cout << endl;
+    cout << Delete(2);
+    Display(first);
     return 0;
 }
