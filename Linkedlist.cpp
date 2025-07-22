@@ -242,33 +242,31 @@ void InsertLast(int x)
 }
 //////////////////////////////////
 // Deletion in a linked list
-int Delete(int pos)
+int Delete(struct Node *p, int pos)
 {
-    Node *p, *q;
+    struct Node *q;
+    q = NULL;
     int x = -1, i;
     if (pos == 1)
     {
+        q = first;
         x = first->data;
-        p = first;
         first = first->next;
-        delete p;
+        delete q;
         return x;
     }
     else
     {
-        p = first;
-        q = NULL;
+        // p = first;
+        // q = NULL;
         for (i = 0; i < pos - 1 && p; i++)
         {
             q = p;
             p = p->next;
         }
-        if (p)
-        {
-            q->next = p->next;
-            x = p->data;
-            delete p;
-        }
+        q->next = p->next;
+        x = p->data;
+        delete p;
         return x;
     }
 }
@@ -294,7 +292,9 @@ int main()
     InsertLast(18);
     Display(last);
     cout << endl;
-    cout << Delete(2);
+    cout << Delete(first, 2);
+    cout << endl;
     Display(first);
     return 0;
 }
+/////////////////////////////////////////////////////////////////////////
