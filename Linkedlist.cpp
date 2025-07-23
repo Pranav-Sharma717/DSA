@@ -270,13 +270,27 @@ int Delete(struct Node *p, int pos)
         return x;
     }
 }
-
+bool Sorted(Node *p)
+{
+    int x = INT_FAST8_MIN;
+    while (p != NULL)
+    {
+        if (p->data < x)
+        {
+            return false;
+        }
+        x = p->data;
+        p = p->next;
+    }
+    return true;
+}
 int main()
 {
     int A[] = {3, 5, 7, 10, 15};
     create(A, 5);
     Display(first);
     cout << endl;
+    cout << Sorted(first) << endl;
     reverseDisplay(first);
     cout << endl;
     cout << count(first);
