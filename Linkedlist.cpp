@@ -284,9 +284,30 @@ bool Sorted(Node *p)
     }
     return true;
 }
+int RemoveDuplicate(struct Node *p)
+{
+    if (p == NULL)
+        return 0;
+    Node *q = p->next;
+    int count = 0;
+    while (q != NULL)
+    {
+        if (p->data != q->data)
+        {
+            p = q;
+            q = q->next;
+        }
+        else
+        {
+            p->next = q->next;
+            delete q;
+            q = q->next;
+        }
+    }
+}
 int main()
 {
-    int A[] = {3, 5, 7, 10, 15};
+    int A[] = {3, 5, 7, 7, 10, 15};
     create(A, 5);
     Display(first);
     cout << endl;
@@ -308,6 +329,8 @@ int main()
     cout << endl;
     cout << Delete(first, 2);
     cout << endl;
+    Display(first);
+    cout << RemoveDuplicate(first) << endl;
     Display(first);
     return 0;
 }
