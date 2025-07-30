@@ -93,7 +93,7 @@ struct Node
 {
     int data;
     Node *next;
-} *first = NULL, *last = NULL;
+} *first = NULL, *last = NULL, *first2 = NULL;
 
 void create(int A[], int n)
 {
@@ -301,14 +301,73 @@ int RemoveDuplicate(struct Node *p)
         {
             p->next = q->next;
             delete q;
-            q = q->next;
+            q = p->next; // update q after deletion to avoid infinite loop
+            count++;
         }
     }
+    return count;
+}
+
+void create2(int A[], int n)
+{
+    int i;
+    struct Node *p;
+    if (n <= 0)
+        return;
+    first2 = new Node;
+    first2->data = A[0];
+    first2->next = NULL;
+    last = first2;
+    for (i = 1; i < n; i++)
+    {
+        p = new Node;
+        p->data = A[i];
+        p->next = NULL;
+        last->next = p;
+        last = p;
+    }
+}
+
+Node *mergeLists(Node *first1, Node *first2)
+{
+    Node *mergedHead = nullptr, *mergedTail = nullptr;
+    while (first1 && first2)
+    {
+        Node *temp;
+        if (first1->data <= first2->data)
+        {
+            temp = first1;
+            first1 = first1->next;
+        }
+        else
+        {
+            temp = first2;
+            first2 = first2->next;
+        }
+        temp->next = nullptr;
+        if (!mergedHead)
+        {
+            mergedHead = mergedTail = temp;
+        }
+        else
+        {
+            mergedTail->next = temp;
+            mergedTail = temp;
+        }
+    }
+    if (first1)
+        mergedTail ? mergedTail->next = first1 : mergedHead = first1;
+    if (first2)
+        mergedTail ? mergedTail->next = first2 : mergedHead = first2;
+    return mergedHead;
 }
 int main()
 {
-    int A[] = {3, 5, 7, 7, 10, 15};
+    int A[] = {3, 5, 7, 7, 10};
+    int a[] = {2, 4, 6, 8, 11};
     create(A, 5);
+    create2(a, 5);
+    Display(first);
     Display(first);
     cout << endl;
     cout << Sorted(first) << endl;
@@ -322,9 +381,9 @@ int main()
     cout << endl;
     cout << search(first, 10);
     cout << endl;
-    Insert(2, 17);
-    Display(first);
     InsertLast(18);
+    Display(first);
+    cout << endl;
     Display(last);
     cout << endl;
     cout << Delete(first, 2);
@@ -332,6 +391,9 @@ int main()
     Display(first);
     cout << RemoveDuplicate(first) << endl;
     Display(first);
+    Node *merged = mergeLists(first, first2);
+    cout << "Merged list: ";
+    Display(merged);
     return 0;
 }
 /////////////////////////////////////////////////////////////////////////
