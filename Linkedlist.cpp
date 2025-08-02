@@ -361,6 +361,19 @@ Node *mergeLists(Node *first1, Node *first2)
         mergedTail ? mergedTail->next = first2 : mergedHead = first2;
     return mergedHead;
 }
+bool LoopOrnot(Node *f)
+{
+    Node *p, *q;
+    p = q = f;
+    while (q && q->next)
+    {
+        p = p->next;
+        q = q->next->next;
+        if (p == q)
+            return true;
+    }
+    return false;
+}
 int main()
 {
     int A[] = {3, 5, 7, 7, 10};
@@ -394,6 +407,8 @@ int main()
     Node *merged = mergeLists(first, first2);
     cout << "Merged list: ";
     Display(merged);
+    cout << endl;
+    cout << LoopOrnot(first) << endl;
     return 0;
 }
 /////////////////////////////////////////////////////////////////////////
