@@ -1,5 +1,9 @@
 #include <iostream>
 using namespace std;
+int main()
+{
+    return 0;
+}
 
 // 2 D Array question : (Team 231A)
 // Question is to find the count of all problems that cna be solved. Approach is to use 2 D arrays.
