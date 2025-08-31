@@ -1,9 +1,9 @@
-#include <iostream>
-using namespace std;
-int main()
-{
-    return 0;
-}
+// #include <bits/stdc++.h>
+// using namespace std;
+// int main()
+// {
+//     return 0;
+// }
 
 // 2 D Array question : (Team 231A)
 // Question is to find the count of all problems that cna be solved. Approach is to use 2 D arrays.
@@ -60,19 +60,75 @@ int main()
 //         cout << a[0] << cnt << a[n];
 //     }
 // }
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     for (int i = 0; i <= n; i++)
+//     {
+//         string a;
+//         cin >> a;
+//         int n = a.length();
+//         if (n <= 10)
+//             cout << a << endl;
+//         else
+//             cout << a[0] << n - 2 << a[n - 1] << endl;
+//     }
+//     return 0;
+// }
+////////////////////////
+// Lucky Division
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// bool islucky(int input)
+// {
+//     int dup = input;
+//     while (dup != 0)
+//     {
+//         if (dup % 10 != 4 && dup % 10 != 7)
+//             return false;
+//         dup /= 10;
+//     }
+//     return true;
+// }
+
+// bool isalmostLucky(int input)
+// {
+//     for (int i = 1; i <= input; i++)
+//     {
+//         if (input % i == 0 && islucky(i))
+//             return true;
+//     }
+//     return false;
+// }
+// int main()
+// {
+//     int input;
+//     cin >> input;
+//     if (islucky(input) || isalmostLucky(input))
+//     {
+//         cout << "YES" << endl;
+//     }
+//     else
+//         cout << "NO" << endl;
+//     return 0;
+// }
+#include <bits/stdc++.h>
+using namespace std;
 int main()
 {
-    int n;
-    cin >> n;
-    for (int i = 0; i <= n; i++)
-    {
-        string a;
-        cin >> a;
-        int n = a.length();
-        if (n <= 10)
-            cout << a << endl;
-        else
-            cout << a[0] << n - 2 << a[n - 1] << endl;
-    }
+    string input1, input2;
+    cin >> input1 >> input2;
+    for (auto &c : input1)
+        c = tolower(c);
+    for (auto &c : input2)
+        c = tolower(c);
+    if (input1 == input2)
+        cout << 0 << endl;
+    else if (input1 < input2)
+        cout << -1 << endl;
+    else
+        cout << 1 << endl;
     return 0;
 }
