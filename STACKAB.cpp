@@ -76,9 +76,13 @@ int main()
     scanf("%d", &st.size);
     st.s = new int[st.size];
     st.top = -1;
-    push(&st, 10);
-    push(&st, 20);
-    push(&st, 30);
+    for (int i = 0; i < st.size; i++)
+    {
+        cout << "Enter the value to be pushed";
+        int n;
+        cin >> n;
+        push(&st, n);
+    }
     for (int i = 0; i <= st.top; i++)
     {
         cout << st.s[i] << " ";
