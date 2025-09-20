@@ -1,11 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Stack using linked list
+// Stack using array is already present in stack.cpp
 struct Stack
 {
     int size;
     int top;
-    int *s;
+    char *s;
 };
 
 void push(Stack *st, int x)
@@ -69,33 +71,68 @@ int isFull(Stack st)
         return 0;
 }
 
-int main()
+// int main()
+// {
+//     struct Stack st;
+//     printf("enter the size of stack");
+//     scanf("%d", &st.size);
+//     st.s = new int[st.size];
+//     st.top = -1;
+//     for (int i = 0; i < st.size; i++)
+//     {
+//         cout << "Enter the value to be pushed";
+//         int n;
+//         cin >> n;
+//         push(&st, n);
+//     }
+//     for (int i = 0; i <= st.top; i++)
+//     {
+//         cout << st.s[i] << " ";
+//     }
+//     cout << endl;
+
+//     cout << "Popped: " << pop(&st) << endl;
+
+//     cout << "Peek at position 1: " << peek(st, 1) << endl;
+
+//     cout << "Stack Top: " << stackTop(st) << endl;
+
+//     cout << "Is Empty: " << isEmpty(st) << endl;
+
+//     cout << "Is Full: " << isFull(st) << endl;
+// }
+///////////////////////////////////////////////////////////
+
+// Parentesis Matching(for every opening paranthesis, there must be a closing one)
+
+int isBalance(char *exp)
 {
     struct Stack st;
-    printf("enter the size of stack");
-    scanf("%d", &st.size);
-    st.s = new int[st.size];
+    st.size = strlen(exp);
     st.top = -1;
-    for (int i = 0; i < st.size; i++)
+    st.s = new char[st.size];
+    for (int i = 0; exp[i] != '\0'; i++)
     {
-        cout << "Enter the value to be pushed";
-        int n;
-        cin >> n;
-        push(&st, n);
+        if (exp[i] == '(')
+            push(&st, exp[i]);
+        else if (exp[i] == ')')
+        {
+            if (isEmpty(st))
+                return false;
+            pop(&st);
+        }
     }
-    for (int i = 0; i <= st.top; i++)
-    {
-        cout << st.s[i] << " ";
-    }
-    cout << endl;
+    return isEmpty(st) ? true : false;
+}
 
-    cout << "Popped: " << pop(&st) << endl;
+int main()
+{
 
-    cout << "Peek at position 1: " << peek(st, 1) << endl;
-
-    cout << "Stack Top: " << stackTop(st) << endl;
-
-    cout << "Is Empty: " << isEmpty(st) << endl;
-
-    cout << "Is Full: " << isFull(st) << endl;
+    char exp[100];
+    cout << "Enter an expression: ";
+    cin >> exp;
+    if (isBalance(exp))
+        cout << "Balanced parentheses" << endl;
+    else
+        cout << "Unbalanced parentheses" << endl;
 }
