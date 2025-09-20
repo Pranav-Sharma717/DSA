@@ -113,9 +113,9 @@ int isBalance(char *exp)
     st.s = new char[st.size];
     for (int i = 0; exp[i] != '\0'; i++)
     {
-        if (exp[i] == '(')
+        if (exp[i] == '(' || exp[i] == '[' || exp[i] == '{')
             push(&st, exp[i]);
-        else if (exp[i] == ')')
+        else if (exp[i] == ')' || exp[i] == ']' || exp[i] == '}')
         {
             if (isEmpty(st))
                 return false;
