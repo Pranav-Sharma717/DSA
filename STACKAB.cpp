@@ -105,39 +105,93 @@ int isFull(Stack st)
 
 // Parentesis Matching(for every opening paranthesis, there must be a closing one)
 
-int isBalance(char *exp)
-{
-    struct Stack st;
-    st.size = strlen(exp);
-    st.top = -1;
-    st.s = new char[st.size];
-    for (int i = 0; exp[i] != '\0'; i++)
-    {
-        if (exp[i] == '(' || exp[i] == '[' || exp[i] == '{')
-            push(&st, exp[i]);
-        else if (exp[i] == ')' || exp[i] == ']' || exp[i] == '}')
-        {
-            if (isEmpty(st))
-                return false;
-            pop(&st);
-        }
-    }
-    return isEmpty(st) ? true : false;
-}
+// int isBalance(char *exp)
+// {
+// struct Stack st;
+// st.size = strlen(exp);
+// st.top = -1;
+// st.s = new char[st.size];
+//     for (int i = 0; exp[i] != '\0'; i++)
+//     {
+//         if (exp[i] == '(' || exp[i] == '[' || exp[i] == '{')
+//             push(&st, exp[i]);
+//         else if (exp[i] == ')' || exp[i] == ']' || exp[i] == '}')
+//         {
+//             if (isEmpty(st))
+//                 return false;
+//             pop(&st);
+//         }
+//     }
+//     return isEmpty(st) ? true : false;
+// }
 
-int main()
-{
+// int main()
+// {
 
-    char exp[100];
-    cout << "Enter an expression: ";
-    cin >> exp;
-    if (isBalance(exp))
-        cout << "Balanced parentheses" << endl;
-    else
-        cout << "Unbalanced parentheses" << endl;
-}
+//     char exp[100];
+//     cout << "Enter an expression: ";
+//     cin >> exp;
+//     if (isBalance(exp))
+//         cout << "Balanced parentheses" << endl;
+//     else
+//         cout << "Unbalanced parentheses" << endl;
+// }
 
 // Associativity and Unary operators
 // The order of precedence inside the precedence of operations like + and - for the post fix and prefix calculations.
 
 // Infix to postfix
+int isOperand(char x)
+{
+    if (x == '+' || x == '*' || x == '/')
+        return 0;
+    else
+        return 1;
+}
+int pre(char x)
+{
+    if (x == '+' || x == '-')
+        return 1;
+    else if (x == '*' || x == '/')
+        return 2;
+    return 0;
+}
+
+char *convert(char *infix)
+{
+    struct Stack st;
+    st.size = strlen(infix) + 1;
+    st.top = -1;
+    st.s = new char[st.size];
+    char *postfix = new char[strlen(infix) + 1];
+    int i = 0, j = 0;
+    while (infix[i] != '\0')
+    {
+        if (isOperand(infix[i]))
+            postfix[j++] = infix[i++];
+        else
+        {
+            if (pre(infix[i]) > pre(stackTop(st)))
+            {
+                push(&st, infix[i++]);
+            }
+            else
+            {
+                postfix[j++] = pop(&st);
+            }
+        }
+    }
+    while (!isEmpty(st))
+    {
+        postfix[j++] = pop(&st);
+    }
+    postfix[j] = '\0';
+    return postfix;
+}
+int main()
+{
+    char infix[100];
+    cout << "Enter the expression" << endl;
+    cin >> infix;
+    cout << convert(infix) << endl;
+}
