@@ -195,3 +195,8 @@ int main()
     cin >> infix;
     cout << convert(infix) << endl;
 }
+
+// Evaluating postfix
+// Pushing the operands into the stack till we get an operator,
+// when we get the operator,pop the stack and perform the operation.
+// Evaluation is iterative procedure and the string should be scanned only once.
