@@ -200,3 +200,39 @@ int main()
 // Pushing the operands into the stack till we get an operator,
 // when we get the operator,pop the stack and perform the operation.
 // Evaluation is iterative procedure and the string should be scanned only once.
+
+int Eval(char *postfix)
+{
+    struct Stack st;
+    int x1, x2, r;
+    for (int i = 0; postfix[i] != '\0'; i++)
+    {
+        if (isOperand(postfix[i]))
+            push(&st, postfix[i]);
+        else
+        {
+            x2 = pop(&st);
+            x1 = pop(&st);
+            switch (postfix[i])
+            {
+            case '+':
+                r = x1 + x2;
+                push(&st, r);
+                break;
+            case '-':
+                r = x1 - x2;
+                push(&st, r);
+                break;
+            case '*':
+                r = x1 * x2;
+                push(&st, r);
+                break;
+            case '/':
+                r = x1 / x2;
+                push(&st, r);
+                break;
+            }
+            return pop(&st);
+        }
+    }
+}
