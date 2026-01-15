@@ -188,13 +188,6 @@ char *convert(char *infix)
     postfix[j] = '\0';
     return postfix;
 }
-int main()
-{
-    char infix[100];
-    cout << "Enter the expression" << endl;
-    cin >> infix;
-    cout << convert(infix) << endl;
-}
 
 // Evaluating postfix
 // Pushing the operands into the stack till we get an operator,
@@ -204,11 +197,15 @@ int main()
 int Eval(char *postfix)
 {
     struct Stack st;
+    st.size = strlen(postfix) + 1;
+    st.top = -1;
+    st.s = new char[st.size];
+
     int x1, x2, r;
     for (int i = 0; postfix[i] != '\0'; i++)
     {
         if (isOperand(postfix[i]))
-            push(&st, postfix[i]);
+            push(&st, postfix[i] - '0'); // Convert char to int
         else
         {
             x2 = pop(&st);
@@ -217,22 +214,52 @@ int Eval(char *postfix)
             {
             case '+':
                 r = x1 + x2;
-                push(&st, r);
                 break;
             case '-':
                 r = x1 - x2;
-                push(&st, r);
                 break;
             case '*':
                 r = x1 * x2;
-                push(&st, r);
                 break;
             case '/':
                 r = x1 / x2;
-                push(&st, r);
                 break;
             }
-            return pop(&st);
+            push(&st, r);
         }
     }
+    return pop(&st);
+}
+
+/**
+ * @brief Main function that converts an infix expression to postfix notation and evaluates it
+ *
+ * This program implements an infix to postfix converter with expression evaluator.
+ *
+ * Process:
+ * 1. Prompts user to enter a mathematical expression in infix notation (e.g., "3+4*2")
+ * 2. Converts the infix expression to postfix notation using the convert() function
+ *    - Postfix notation (Reverse Polish Notation) places operators after operands (e.g., "3 4 2 * +")
+ *    - Uses a stack-based algorithm to handle operator precedence
+ * 3. Evaluates the postfix expression using the Eval() function
+ *    - Scans the postfix expression left to right
+ *    - Pushes operands onto a stack
+ *    - When an operator is encountered, pops two operands, applies the operator, and pushes result back
+ * 4. Displays both the converted postfix expression and the final numerical result
+ *
+ * @return int - Program exit status (0 on success)
+ *
+ * @example
+ * Input:  "3+4*2"
+ * Postfix: "3 4 2 * +"
+ * Result: 11
+ */
+int main()
+{
+    char infix[100];
+    cout << "Enter the expression: ";
+    cin >> infix;
+    char *postfix = convert(infix);
+    cout << "Postfix: " << postfix << endl;
+    cout << "Result: " << Eval(postfix) << endl;
 }
