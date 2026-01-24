@@ -69,7 +69,7 @@ int main()
 {
     Queue q(5);
     q.enqueue(10);
-    q.enqueue(20);
+    q.enqueue(50);
     q.enqueue(30);
     q.display();
     cout << "Dequeued: " << q.dequeue() << "\n";
