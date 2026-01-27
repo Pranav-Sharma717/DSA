@@ -71,6 +71,7 @@ int main()
     q.enqueue(10);
     q.enqueue(50);
     q.enqueue(30);
+    //Commit
     q.display();
     cout << "Dequeued: " << q.dequeue() << "\n";
     q.display();
