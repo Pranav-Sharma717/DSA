@@ -1,78 +1,52 @@
-// Using one pointer
-#include <iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
-class Queue
-{
-private:
-    int *arr;
-    int rear;
-    int capacity;
-    int count;
-
-public:
-    Queue(int size)
-    {
-        capacity = size;
-        arr = new int[capacity];
-        rear = -1;
-        count = 0;
-    }
-
-    void enqueue(int x)
-    {
-        if (count == capacity)
-        {
-            cout << "Queue Overflow\n";
-            return;
-        }
-        rear = (rear + 1) % capacity;
-        arr[rear] = x;
-        count++;
-    }
-
-    int dequeue()
-    {
-        if (count == 0)
-        {
-            cout << "Queue Underflow\n";
-            return -1;
-        }
-        int front = (rear - count + 1 + capacity) % capacity;
-        int value = arr[front];
-        count--;
-        return value;
-    }
-
-    void display()
-    {
-        if (count == 0)
-        {
-            cout << "Queue is empty\n";
-            return;
-        }
-        for (int i = 0; i < count; i++)
-        {
-            int index = (rear - count + 1 + i + capacity) % capacity;
-            cout << arr[index] << " ";
-        }
-        cout << "\n";
-    }
-
-    ~Queue()
-    {
-        delete[] arr;
-    }
+struct Queue{
+    int size;
+    int front; 
+    int rear; 
+    int *Q;
 };
+
+//front and rear are index pointers
+
+//enqueue
+
+void enqueue(Queue *q, int x){
+    if(q->rear==q->size-1){
+        cout<<"Queue is full";
+    }
+    else{
+        q->rear++;
+        q->Q[q->rear] = x;
+    }
+}
+
+int dequeue(Queue *q){
+    int x = -1;
+    if(q->rear == q->front){
+        cout<<"Queue is empty"<<endl;
+    }
+    else{
+        q->front++;
+        x = q->Q[q->front];
+    }
+    return x;
+}
 
 int main()
 {
-    Queue q(5);
-    q.enqueue(10);
-    q.enqueue(50);
-    q.enqueue(30);
-    q.display();
-    cout << "Dequeued: " << q.dequeue() << "\n";
-    q.display();
+    struct Queue q;
+    cout<<"enter the size"<<endl;
+    cin>>q.size;
+    q.Q= new  int[q.size];
+    q.front=q.rear=-1;
+    
+    enqueue(&q, 10);
+    enqueue(&q, 20);
+    int val = dequeue(&q);
+    cout<<"Dequeued: "<<val<<endl;
+    
+    delete[] q.Q;
     return 0;
 }
