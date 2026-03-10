@@ -59,5 +59,6 @@ int main()
     string a = "babad";
     Solution sol;
     string res = sol.longestPalindrome(a);
-    cout << res;
+    cout << res << endl;
+    cout << 2 % 10;
 }
