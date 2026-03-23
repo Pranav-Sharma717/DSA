@@ -1,52 +1,78 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-struct Queue{
+struct Queue
+{
     int size;
-    int front; 
-    int rear; 
+    int front;
+    int rear;
     int *Q;
 };
 
-//front and rear are index pointers
+void create(struct Queue *q, int size)
+{
+    q->size = size;
+    q->front = q->rear = -1;
+    q->Q = new int[q->size];
+}
 
-//enqueue
+// front and rear are index pointers
 
-void enqueue(Queue *q, int x){
-    if(q->rear==q->size-1){
-        cout<<"Queue is full";
+// enqueue
+
+void enqueue(Queue *q, int x)
+{
+    if (q->rear == q->size - 1)
+    {
+        cout << "Queue is full";
     }
-    else{
+    else
+    {
         q->rear++;
         q->Q[q->rear] = x;
     }
 }
 
-int dequeue(Queue *q){
+int dequeue(Queue *q)
+{
     int x = -1;
-    if(q->rear == q->front){
-        cout<<"Queue is empty"<<endl;
+    if (q->rear == q->front)
+    {
+        cout << "Queue is empty" << endl;
     }
-    else{
+    else
+    {
         q->front++;
         x = q->Q[q->front];
     }
     return x;
 }
 
+void Display(struct Queue q)
+{
+    for (int i = q.front + 1; i <= q.rear; i++)
+    {
+        printf("%d ", q.Q[i]);
+    }
+}
+
 int main()
 {
     struct Queue q;
-    cout<<"enter the size"<<endl;
-    cin>>q.size;
-    q.Q= new  int[q.size];
-    q.front=q.rear=-1;
-    
+    cout << "enter the size" << endl;
+    cin >> q.size;
+    q.Q = new int[q.size];
+    q.front = q.rear = -1;
+
     enqueue(&q, 10);
     enqueue(&q, 20);
+    enqueue(&q, 200);
+    enqueue(&q, 40);
+    Display(q);
+    cout << endl;
     int val = dequeue(&q);
-    cout<<"Dequeued: "<<val<<endl;
-    
+    cout << "Dequeued: " << val << endl;
+
     delete[] q.Q;
     return 0;
 }
