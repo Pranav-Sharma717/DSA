@@ -39,5 +39,20 @@ int dequeue(struct Queue *q)
 
 int main()
 {
+    struct Queue q;
+    q.size = 5;
+    q.front = 0;
+    q.Rear = 0;
+    q.Q = new int[q.size];
+
+    enqueue(&q, 10);
+    enqueue(&q, 20);
+    enqueue(&q, 30);
+
+    cout << dequeue(&q) << endl;
+    cout << dequeue(&q) << endl;
+    cout << dequeue(&q) << endl;
+
+    delete[] q.Q;
     return 0;
 }
